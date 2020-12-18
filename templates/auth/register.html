@@ -20,9 +20,9 @@
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item">
+<!--                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('home') }}"> <i class="fas fa-home"></i> Inicio </a>
-                </li>
+                </li> -->
             </ul>
             <ul class="navbar-nav mt-2 mt-lg-0">
                 <li class="nav-item">
@@ -38,6 +38,18 @@
         </form> -->
         </div>
     </nav>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages%}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <div class="row mx-5">
         <div class="col-md-6">
             <div class="mt-5 mb-5 text-center">

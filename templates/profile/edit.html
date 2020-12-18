@@ -24,41 +24,41 @@
           El usuario y correo eléctronico registrado, <strong>no</strong> pueden ser cambiados
         </div> -->
         <h3>Información Personal</h3>
-        <form class="form-horizontal" role="form">
+        <form action="{{ url_for('updateProfile') }}" method="POST" class="form-horizontal" role="form">
           <div class="form-group">
             <label class="col-lg-3 control-label">Nombres:</label>
             <div class="col-lg-8">
-              <input class="form-control" value="Jane" type="text">
+              <input class="form-control" name="name" value="Jane" type="text">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Apellidos:</label>
             <div class="col-lg-8">
-              <input class="form-control" value="Bishop" type="text">
+              <input class="form-control" name="surname" value="Bishop" type="text">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Contacto:</label>
             <div class="col-lg-8">
-              <input class="form-control" value="3003567055" type="number">
+              <input class="form-control" name="cellphone" value="3003567055" type="number">
             </div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label">Correo:</label>
             <div class="col-lg-8">
-              <input class="form-control" value="janesemail@gmail.com" type="email">
+              <input class="form-control" name="email" value="admin@admin.com" type="email">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label">Usuario:</label>
+            <label class="col-lg-4 control-label">Nueva Contraseña:</label>
             <div class="col-lg-8">
-              <input class="form-control" value="janesemail" type="text">
+              <input class="form-control" name="newPassword" value="" type="password">
             </div>
           </div>
           <div class="form-group">
             <label class="col-md-3 control-label"></label>
             <div class="col-md-8">
-              <a href="{{ url_for('home') }}" class="btn btn-primary">Guardar</a>
+              <input type="submit" class="btn btn-primary" value="Actualizar">
             </div>
           </div>
         </form>
