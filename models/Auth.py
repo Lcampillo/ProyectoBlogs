@@ -14,11 +14,11 @@ class Auth():
             if self.email in account[0]:
                 return 'true'
 
-    def register(self):
+    def register(self, activated=False):
         for account in db:       
             if self.email in account[0]:
                return 'danger' 
-        account = (self.email,self.password)
+        account = [self.email,self.password,self.activation_key,activated]
         db.append(account)
         return 'success'
 
@@ -29,3 +29,7 @@ class Auth():
                 account = (self.email,self.newPassword)
                 db[idx] = account
                 return 'success'
+
+    def set_temp_key(self, temp_key):
+        self.activation_key = temp_key
+

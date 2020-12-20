@@ -3,7 +3,11 @@ from models import Auth
 from flask import render_template
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from random import choice
 import smtplib
+from models.Auth import db
+import urllib.parse as urlparse
+from urllib.parse import parse_qs
 
 msg = MIMEMultipart()
 
@@ -14,6 +18,22 @@ def login():
 @app.route('/register')
 def register():
    return render_template('auth/register.html')
+
+@app.route('/verify', methods=['GET'])
+def verify():
+   if request.method == 'GET':
+          
+      parsed = urlparse.urlparse(request.url)     
+      email = parse_qs(parsed.query)['email'][0]
+      temp_key = parse_qs(parsed.query)['hash'][0]
+
+      return render_template('auth/verify.html', email=email, temp_key=temp_key)
+      #for idx, account in enumerate(db):       
+      #      if email == account[0] and temp_key == account[2]:
+      #             db[idx][3]= True
+      #             return redirect(url_for('login'))
+      #return redirect(url_for('register'))
+   
 
 @app.route('/recuperar_contraseña')
 def recover():
@@ -27,13 +47,28 @@ def store():
       email = request.form['email']
       cellphone = request.form['cellphone']
       password = request.form['password']
+      temp_key = generate_key()
 
       hazEl = Auth.Auth(name,surname,email,cellphone,password)
+      hazEl.set_temp_key(temp_key)
 
       result = hazEl.register()
 
-      message_e = f'''Bienvenido a Bloggi!!\nHola {name}, nos place que empieces a utilizar nuestros servicios de Blog\npara ellos solcitamos
-      que actives tu cuenta de usario en el siguiente enlace:\n url=https'''
+      ## Enviar email de activación de cuenta
+      message_e = f'''Bienvenido a Bloggi!!
+
+      Hola {name.capitalize()} {surname.capitalize()}.
+
+      Nos place que empieces a utilizar nuestros servicios de Blog, estos son tus datos de acceso:
+      
+      ----------------------------
+      Correo: {email}
+      Contraseña: {password}
+      ----------------------------
+
+      Por favor, activa tu cuenta presionando el siguiente enlace:
+      http://127.0.0.1:5000/verify?email={hazEl.email}&hash={hazEl.activation_key}'''
+
       #parametros de conexión del correo electronico
       password = "yoyito2020"
       msg['From'] = "profeyoyito2020@gmail.com"
@@ -73,3 +108,11 @@ def singup():
       else:
          flash('El usuario no existe')
          return redirect(url_for('login'))
+
+def generate_key():
+   longitud = 18
+   valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ=@#%&+"
+
+   p = ""
+   p = p.join([choice(valores) for i in range(longitud)])
+   return p
