@@ -32,9 +32,7 @@ def verify():
                   db[idx][3]= True
                   return render_template('auth/verify.html', email=email, temp_key=temp_key)
       return redirect(url_for('register'))
-
-      
-   
+ 
 
 @app.route('/recuperar_contraseña')
 def recover():
@@ -101,11 +99,13 @@ def singup():
 
       hazEl = Auth.Auth('','',email,'',password)
 
-      result = hazEl.login()
+      account_user, activated_user = hazEl.login()
 
-      if result == 'true':
+      if account_user == 'true' and activated_user == 'true':
          flash('Bienvenido')
          return redirect(url_for('home'))
+      elif account_user == 'true' and account_user == 'false':
+             pass
       else:
          flash('El usuario no existe')
          return redirect(url_for('login'))

@@ -12,7 +12,7 @@ class Auth():
     def login(self):
         for account in db:       
             if self.email in account[0]:
-                return 'true'
+                return 'true', account[3]
 
     def register(self, activated=False):
         for account in db:       
