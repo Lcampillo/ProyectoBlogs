@@ -27,12 +27,13 @@ def verify():
       email = parse_qs(parsed.query)['email'][0]
       temp_key = parse_qs(parsed.query)['hash'][0]
 
-      return render_template('auth/verify.html', email=email, temp_key=temp_key)
-      #for idx, account in enumerate(db):       
-      #      if email == account[0] and temp_key == account[2]:
-      #             db[idx][3]= True
-      #             return redirect(url_for('login'))
-      #return redirect(url_for('register'))
+      for idx, account in enumerate(db):       
+           if email in account[0] and temp_key in account[2]:
+                  db[idx][3]= True
+                  return render_template('auth/verify.html', email=email, temp_key=temp_key)
+      return redirect(url_for('register'))
+
+      
    
 
 @app.route('/recuperar_contraseña')
