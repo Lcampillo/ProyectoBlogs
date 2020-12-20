@@ -29,7 +29,7 @@ def verify():
 
       for idx, account in enumerate(db):       
            if email in account[0] and temp_key in account[2]:
-                  db[idx][3]= True
+                  db[idx][3]= 'true'
                   return render_template('auth/verify.html', email=email, temp_key=temp_key)
       return redirect(url_for('register'))
  
@@ -104,8 +104,9 @@ def singup():
       if account_user == 'true' and activated_user == 'true':
          flash('Bienvenido')
          return redirect(url_for('home'))
-      elif account_user == 'true' and account_user == 'false':
-             pass
+      elif account_user == 'true' and activated_user == 'false':
+         flash('El usuario no ha sido activado')
+         return redirect(url_for('login'))
       else:
          flash('El usuario no existe')
          return redirect(url_for('login'))

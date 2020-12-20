@@ -14,11 +14,11 @@ class Auth():
             if self.email in account[0]:
                 return 'true', account[3]
 
-    def register(self, activated=False):
+    def register(self):
         for account in db:       
             if self.email in account[0]:
                return 'danger' 
-        account = [self.email,self.password,self.activation_key,activated]
+        account = [self.email,self.password,self.activation_key,'false']
         db.append(account)
         return 'success'
 
