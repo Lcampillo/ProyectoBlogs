@@ -13,6 +13,7 @@ class Auth():
         for account in db:       
             if self.email in account[0]:
                 return 'true', account[3]
+        return 'false' ,'false'
 
     def register(self):
         for account in db:       
