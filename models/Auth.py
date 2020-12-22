@@ -1,5 +1,7 @@
 from app import *
 import datetime
+from random import choice
+import hashlib
 
 class Auth():
 
@@ -10,24 +12,26 @@ class Auth():
         self.contact = contact
         self.password = password
         self.newPassword = newPassword
+
     def login(self):
-        for account in db:       
-            if self.email in account[0]:
-                return 'true', account[3]
-        return 'false' ,'false'
+        crypted = hashlib.sha256()
+        crypted.update(self.password.encode("utf-8"))
+
+        cursor.execute("SELECT * FROM users WHERE email = ? AND password = ? ",(self.email,crypted.hexdigest()))
+        result = cursor.fetchone()
+        return result
 
     def register(self):
         fecha = datetime.datetime.now()
-        cursor.execute('INSERT INTO users VALUES()',)
+        activation_key = self.generate_key()
+        crypted = hashlib.sha256()
+        crypted.update(self.password.encode("utf-8"))
+
+        cursor.execute("INSERT OR IGNORE INTO users (name, surname, password, rol, contact, email, hash ,activated, created_at) VALUES ( ?, ? ,? ,? ,? ,?, ?, ? , ?)",
+                        (self.name, self.surname, crypted.hexdigest() , 'user', self.contact, self.email, activation_key ,'false', fecha))
         db.commit()
 
-        for account in db:       
-            if self.email in account[0]:
-               return 'danger' 
-        account = [self.email,self.password,self.activation_key,'false']
-        db.append(account)
-        return 'success'
-
+        return [cursor.rowcount,self,'success',activation_key]
 
     def update(self):
         for idx, account  in enumerate(db):       
@@ -36,6 +40,11 @@ class Auth():
                 db[idx] = account
                 return 'success'
 
-    def set_temp_key(self, temp_key):
-        self.activation_key = temp_key
+    def generate_key(self):
+        longitud = 18
+        valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ=@#%+"
+
+        p = ""
+        p = p.join([choice(valores) for i in range(longitud)])
+        return p
 
