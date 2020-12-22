@@ -1,4 +1,5 @@
-db = []
+from app import *
+import datetime
 
 class Auth():
 
@@ -16,6 +17,10 @@ class Auth():
         return 'false' ,'false'
 
     def register(self):
+        fecha = datetime.datetime.now()
+        cursor.execute('INSERT INTO users VALUES()',)
+        db.commit()
+
         for account in db:       
             if self.email in account[0]:
                return 'danger' 

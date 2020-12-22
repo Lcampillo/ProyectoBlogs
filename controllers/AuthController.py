@@ -13,7 +13,12 @@ msg = MIMEMultipart()
 
 @app.route('/login')
 def login():
-   return render_template('auth/login.html')
+      return render_template('auth/login.html')
+
+@app.route('/logout')
+def logout():
+      session.pop("user",None)
+      return render_template('auth/login.html')
 
 @app.route('/register')
 def register():
@@ -54,7 +59,7 @@ def store():
       result = hazEl.register()
 
       ## Enviar email de activación de cuenta
-      message_e = f'''Bienvenido a Bloggi!!
+      message_e = f"""Bienvenido a Bloggi!!
 
       Hola {name.capitalize()} {surname.capitalize()}.
 
@@ -66,7 +71,7 @@ def store():
       ----------------------------
 
       Por favor, activa tu cuenta presionando el siguiente enlace:
-      http://127.0.0.1:5000/verify?email={hazEl.email}&hash={hazEl.activation_key}'''
+      http://127.0.0.1:5000/verify?email={hazEl.email}&hash={hazEl.activation_key}"""
 
       #parametros de conexión del correo electronico
       password = "yoyito2020"
@@ -102,6 +107,7 @@ def singup():
       account_user, activated_user = hazEl.login()
 
       if account_user == 'true' and activated_user == 'true':
+         session["user"] = email
          flash('Bienvenido')
          return redirect(url_for('home'))
       elif account_user == 'true' and activated_user == 'false':

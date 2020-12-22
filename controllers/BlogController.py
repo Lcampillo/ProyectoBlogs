@@ -3,12 +3,24 @@ from flask import render_template
 
 @app.route('/')
 def home():
-   return render_template('index.html')
+   if "user" in session:
+      return render_template('index.html')
+   else:
+      flash('Inicie sesion para acceder al sistema')
+      return redirect(url_for('login'))
 
 @app.route('/post/create')
 def createPost():
-   return render_template('blog/create.html')
+   if "user" in session:
+      return render_template('blog/create.html')
+   else:
+      flash('Inicie sesion para acceder al sistema')
+      return redirect(url_for('login'))
 
 @app.route('/post/single-post')
 def singlePost():
-   return render_template('blog/single_post.html')
+   if "user" in session:
+      return render_template('blog/single_post.html')
+   else:
+      flash('Inicie sesion para acceder al sistema')
+      return redirect(url_for('login'))
