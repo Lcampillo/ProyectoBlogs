@@ -146,10 +146,10 @@
                     </ul>
                 </div>
                 <h4>Añadir comentario</h4>
-                <form action="">
+                <form action="{{ url_for('commentPost') }}" method="POST" class="form-horizontal" role="form">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1"></label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="body" rows="3"></textarea>
                     </div>
                     <a href="#" class="btn btn-info">Comentar</a>
                 </form>

@@ -70,3 +70,22 @@ def searchPost():
    else:
       flash("Inicie sesion para acceder al sistema")
       return redirect(url_for('login'))
+
+@app.route('/comment/post', methods=['POST','GET'])
+def commentPost():
+   if "user" in session:
+      if request.method == 'POST':
+         body = request.form['body']
+         blogtitle = None #TODO buscar titulo del blog
+         hazEl = Comment.Comment(body, session['user'],blogtitle)
+         hazEl.writeComment()
+
+      if result[0] >= 1:
+         flash("Comentario creado correctamente")
+         return redirect(url_for('home'))
+      else:
+         flash("Algo salio mal")
+         return redirect(url_for('singlePost'))
+   else:
+      flash("Inicie sesion para acceder al sistema")
+      return redirect(url_for('login'))
