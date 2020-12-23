@@ -49,6 +49,7 @@ def store():
       temp_key = generate_key()
 
       hazEl = Auth.Auth(name,surname,email,cellphone,password)
+      # Crea clave temporal para la activación de cuenta a través de correo
       hazEl.set_temp_key(temp_key)
 
       result = hazEl.register()
