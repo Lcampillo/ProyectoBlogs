@@ -1,7 +1,8 @@
-from flask import Flask, render_template, url_for, request, flash, redirect, session
+from flask import Flask, render_template, url_for, request, flash, redirect
 import sqlite3
 
-db = sqlite3.connect('database/bloggi.db',check_same_thread=False)
+db = sqlite3.connect('bloggi.db')
+
 cursor = db.cursor()
 
 
