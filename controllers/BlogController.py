@@ -28,15 +28,18 @@ def singlePost():
       flash('Inicie sesion para acceder al sistema')
       return redirect(url_for('login'))
 
-@app.route('/store/post', methods=['POST'])
+@app.route('/store/post', methods=['POST','GET'])
 def storePost():
    if "user" in session:
       if request.method == 'POST':
          title = request.form['title']
          description = request.form['description']
          published = request.form['published']
-         image = request.form['image']
          state = request.form['state']
+
+         image = request.files['image']
+         filename = secure_filename(image.filename)
+         image.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 
          hazEl = Blog.Blog(title,description,published,state,image)
          result = hazEl.store()
@@ -47,6 +50,23 @@ def storePost():
          else:
             flash("Algo salio mal")
             return redirect(url_for('createPost'))
+      else:
+         flash("Inicie sesion para acceder al sistema")
+         return redirect(url_for('login'))
 
+@app.route('/search', methods=['POST'])
+def searchPost():
+   if "user" in session:
+      if request.method == 'POST':
+         title = request.form['title']
       
+      hazEl = Blog.Blog(title)
+
+      result = hazEl.search()
       
+      if result is not None:
+         return render_template('index.html',posts = result)
+         
+   else:
+      flash("Inicie sesion para acceder al sistema")
+      return redirect(url_for('login'))
