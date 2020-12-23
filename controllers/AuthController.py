@@ -104,6 +104,7 @@ def store():
 @app.route('/singup', methods=['GET','POST'])
 
 def singup():
+   global login_data
    if request.method == 'POST':
       email = request.form['email']
       password = request.form['password']
@@ -111,8 +112,6 @@ def singup():
       hazEl = Auth.Auth('','',email,'',password)
 
       login = hazEl.login()
-
-      print(login,'\n',email)
 
       # Si existe el usuario y contraseña:
       try:

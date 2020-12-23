@@ -5,7 +5,11 @@ from flask import render_template
 @app.route('/profile')
 def profile():
    if "user" in session:
-      return render_template('profile/edit.html')
+      email = session["user"]
+      cursor.execute('SELECT name, surname, contact FROM users WHERE email = ?', (email,))
+      result = cursor.fetchone()
+      print(result)
+      return render_template('profile/edit.html', name=result[0], surname=result[1], contact=result[2], email=email)
    else:
       flash('Inicie sesion para acceder al sistema')
       return redirect(url_for('login'))
@@ -23,7 +27,7 @@ def updateProfile():
       hazEl = Auth.Auth(name,surname,email,cellphone,'',newPassword)
 
       result = hazEl.update()
-
+      print(result)
       if result == 'success':
          flash('Perfil actualizado correctamente')
          return redirect(url_for('profile'))

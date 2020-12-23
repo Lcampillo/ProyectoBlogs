@@ -48,5 +48,6 @@ def storePost():
             flash("Algo salio mal")
             return redirect(url_for('createPost'))
 
+
       
       

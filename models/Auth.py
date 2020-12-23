@@ -14,31 +14,28 @@ class Auth():
         self.newPassword = newPassword
 
     def login(self):
-        crypted = hashlib.sha256()
-        crypted.update(self.password.encode("utf-8"))
-
-        cursor.execute("SELECT * FROM users WHERE email = ? AND password = ? ",(self.email,crypted.hexdigest()))
+        cursor.execute("SELECT * FROM users WHERE email = ? AND password = ? ",(self.email,self._encrypt(self.password)))
         result = cursor.fetchone()
         return result
 
     def register(self):
         fecha = datetime.datetime.now()
         activation_key = self.generate_key()
-        crypted = hashlib.sha256()
-        crypted.update(self.password.encode("utf-8"))
 
         cursor.execute("INSERT OR IGNORE INTO users (name, surname, password, rol, contact, email, hash ,activated, created_at) VALUES ( ?, ? ,? ,? ,? ,?, ?, ? , ?)",
-                        (self.name, self.surname, crypted.hexdigest() , 'user', self.contact, self.email, activation_key ,'false', fecha))
+                        (self.name, self.surname, self._encrypt(self.password) , 'user', self.contact, self.email, activation_key ,'false', fecha))
         db.commit()
 
         return [cursor.rowcount,self,'success',activation_key]
 
     def update(self):
-        for idx, account  in enumerate(db):       
-            if self.email in account[0]:
-                account = (self.email,self.newPassword)
-                db[idx] = account
-                return 'success'
+        try:
+            cursor.execute("UPDATE users SET password = ?, name = ?, surname = ?, contact = ?  WHERE email = ?",
+            (self._encrypt(self.newPassword), self.name, self.surname, self.contact, self.email))
+            db.commit()
+            return 'success'
+        except:
+            return 'something went wrong'
 
     def generate_key(self):
         longitud = 18
@@ -47,4 +44,9 @@ class Auth():
         p = ""
         p = p.join([choice(valores) for i in range(longitud)])
         return p
+
+    def _encrypt(self,password):
+        crypted = hashlib.sha256()
+        crypted.update(password.encode("utf-8"))
+        return crypted.hexdigest()
 
