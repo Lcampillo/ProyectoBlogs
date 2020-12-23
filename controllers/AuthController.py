@@ -102,7 +102,9 @@ def store():
          return redirect(url_for('register'))
 
 @app.route('/singup', methods=['GET','POST'])
+
 def singup():
+   global login_data
    if request.method == 'POST':
       email = request.form['email']
       password = request.form['password']
@@ -111,18 +113,16 @@ def singup():
 
       login = hazEl.login()
 
-      print(login,'\n',email)
-
-      if login[6] == email and login[7] == 'true':
-         session["user"] = email
-         session["id"] = login[0]
-         flash(f"Bienvenido {login[2]}")
-         return redirect(url_for('home'))
-      elif login[7] == 'false':
-         flash('El usuario no ha sido activado')
+      # Si existe el usuario y contraseña:
+      try:
+         if login[6] == email and login[7] == 'true':
+            session["user"] = email
+            session["id"] = login[0]
+            flash(f"Bienvenido {login[2]}")
+            return redirect(url_for('home'))
+         elif login[7] == 'false':
+            flash('El usuario no ha sido activado')
+            return redirect(url_for('login'))
+      except:
+         flash('Datos de inicio inválidos, por favor intente nuevamente')
          return redirect(url_for('login'))
-      else:
-         flash('El usuario no existe')
-         return redirect(url_for('login'))
-
-

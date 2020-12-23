@@ -54,11 +54,15 @@ def storePost():
          flash("Inicie sesion para acceder al sistema")
          return redirect(url_for('login'))
 
+<<<<<<< HEAD
 @app.route('/search', methods=['POST'])
 def searchPost():
    if "user" in session:
       if request.method == 'POST':
          title = request.form['title']
+=======
+
+>>>>>>> 43fbf6263e6c8e1a44833cba885cef02601d6ed1
       
       hazEl = Blog.Blog(title)
 
