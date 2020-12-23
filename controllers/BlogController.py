@@ -71,12 +71,11 @@ def searchPost():
       flash("Inicie sesion para acceder al sistema")
       return redirect(url_for('login'))
 
-<<<<<<< HEAD
 @app.route('/home/<filename>')
 def uploaded_file(filename):
        filename = 'http://127.0.0.1:5000/static/images_posts/' + filename
        return render_template('index.html', filename = filename)
-=======
+       
 @app.route('/comment/post', methods=['POST','GET'])
 def commentPost():
    if "user" in session:
@@ -95,4 +94,3 @@ def commentPost():
    else:
       flash("Inicie sesion para acceder al sistema")
       return redirect(url_for('login'))
->>>>>>> 20e61ebded750ceebc12584f75f62d719d24ea61
