@@ -8,51 +8,12 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8">
-            <h1>Titulo post</h1>
+            <h1>{{ post[1] }}</h1>
             <div class="mt-4">
-                <span class="text-muted">2020/05/11</span>
+                <span class="text-muted">{{ post[3] }}</span>
             </div>
             <div class="mt-4">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget orci in justo cursus
-                    tincidunt eu ut sapien. Duis sed dolor in ante bibendum faucibus. Sed fermentum nibh risus, eu
-                    congue nisl viverra id. Nunc bibendum dui mi. Suspendisse facilisis sollicitudin elit, vitae
-                    feugiat massa maximus gravida. Vivamus nisi tortor, sollicitudin non tempor vitae, mattis at
-                    tellus. Sed orci metus, hendrerit non odio a, dictum laoreet tellus. Nulla facilisi. Sed luctus
-                    neque urna, finibus fringilla enim vestibulum ut.
-
-                    Praesent faucibus sem velit, nec aliquet ex mollis in. Donec vestibulum neque est, nec congue
-                    lorem lobortis vitae. Mauris faucibus venenatis nulla in pretium. Vivamus eu semper quam.
-                    Maecenas sed suscipit risus. Ut tincidunt ante at pharetra consequat. Proin mi metus, placerat
-                    non augue ac, porta sollicitudin velit. Mauris vitae rutrum risus. Nunc dapibus turpis dictum,
-                    sagittis turpis id, efficitur libero. Etiam vel bibendum ante. Nullam et sagittis tellus, a
-                    imperdiet nunc. Duis et enim at enim ullamcorper sodales.
-
-                    Mauris quis magna non ligula lacinia mattis a eu nibh. Mauris maximus, tortor sit amet facilisis
-                    lobortis, elit lacus gravida metus, eget consectetur justo lectus ac nisi. In nisi tortor,
-                    ultrices at augue eget, commodo facilisis urna. Praesent pulvinar nibh eros, a aliquam diam
-                    varius at. Praesent sed accumsan orci, vitae dapibus leo. In fermentum metus ex, ut gravida
-                    felis ultricies non. Morbi leo lacus, aliquam ac consectetur vitae, elementum semper mauris.
-                    Donec viverra, odio vitae scelerisque lacinia, ipsum felis laoreet sem, nec efficitur lorem
-                    velit in leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-                    curae; Integer vitae lacus augue. Maecenas eget condimentum neque, et convallis enim. Aliquam
-                    cursus dolor vitae purus interdum, lacinia porta risus hendrerit.
-
-                    Phasellus odio ante, semper consectetur suscipit eu, dictum vitae ligula. Nullam ullamcorper
-                    lectus erat, sit amet posuere nulla dignissim ut. Morbi nisl neque, mattis nec convallis sit
-                    amet, dictum nec ligula. Mauris vehicula semper est ut elementum. Nunc dapibus ipsum non sem
-                    aliquam tempor. Nunc viverra posuere nisi, id hendrerit neque facilisis a. Maecenas pulvinar
-                    tellus non libero egestas luctus. Integer in diam vitae ipsum maximus tincidunt. Aliquam odio
-                    orci, commodo tincidunt turpis ut, dapibus vestibulum est. Quisque euismod elementum risus eget
-                    tincidunt.
-
-                    Pellentesque vel dignissim justo. Sed vitae tristique enim. Aliquam luctus purus nec massa
-                    rutrum, sit amet molestie lectus laoreet. Donec vel posuere ante, id rutrum felis. Sed vehicula
-                    non odio sit amet aliquet. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras
-                    aliquet, libero a luctus malesuada, tellus elit aliquet justo, a porta sapien mi nec lectus.
-                    Fusce vulputate nisi purus, a cursus dui volutpat sed. Vivamus eget facilisis purus, at posuere
-                    nunc. Praesent tempor enim at ligula laoreet, vitae mattis felis finibus. Nullam id faucibus
-                    ipsum, et ultricies ex. Sed a diam nec urna vulputate tempus eget eget nisi. Donec venenatis sit
-                    amet felis eget lobortis.</p>
+                <p>{{ post[2]|safe }}</p>
             </div>
             <hr>
             <div class="mb-5">

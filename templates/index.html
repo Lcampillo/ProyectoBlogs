@@ -9,13 +9,13 @@
     <div class="row">
         <div class="col-md-10">
             <div class="row row-cols-1 row-cols-md-3">
-                {% for post in posts%}
+                {% for post in posts %}
                     <div class="col mb-4">
                         <div class="card h-100">
-                            <a href="{{ url_for('singlePost') }}"><img src="{{ url_for('uploaded_file', filename=post[6]) }}" class="card-img-top"
+                            <a href="{{ url_for('singlePost',post_id=post[0]) }}"><img src="#" class="card-img-top"
                                     alt="..."></a>
                             <div class="card-body">
-                                <h5 class="card-title"><a href="{{ url_for('singlePost') }}" class="card-link">{{ post[1] }}</a></h5>
+                                <h5 class="card-title"><a href="{{ url_for('singlePost',post_id=post[0]) }}" class="card-link">{{ post[1] }}</a></h5>
                                 <p class="card-text">{{ post[2]|safe }}</p>
                             </div>
                             <div class="card-footer">
