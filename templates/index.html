@@ -16,7 +16,7 @@
                                     alt="..."></a>
                             <div class="card-body">
                                 <h5 class="card-title"><a href="{{ url_for('singlePost') }}" class="card-link">{{ post[1] }}</a></h5>
-                                <p class="card-text">{{ post[2] }}</p>
+                                <p class="card-text">{{ post[2]|safe }}</p>
                             </div>
                             <div class="card-footer">
                                 <small class="text-muted">{{ post[3] }}</small>
