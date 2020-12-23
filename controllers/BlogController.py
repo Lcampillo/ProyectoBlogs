@@ -1,6 +1,7 @@
 from app import *
 from flask import render_template
 from models import Blog
+from models import Comment
 
 @app.route('/')
 def home():
@@ -20,12 +21,16 @@ def createPost():
       flash('Inicie sesion para acceder al sistema')
       return redirect(url_for('login'))
 
-@app.route('/post/single-post/<int:post_id>',methods=['GET','POST'])
+@app.route('/single-post/<int:post_id>',methods=['GET','POST'])
 def singlePost(post_id):
    if "user" in session:
       hazEl = Blog.Blog(post_id)
       result = hazEl.show()
-      return render_template('blog/single_post.html',post=result)
+
+      coments = Comment.Comment('','',post_id)
+      resultComent = coments.query()
+      
+      return render_template('blog/single_post.html',post=result,coments = resultComent[0], users = resultComent[1])
    else:
       flash('Inicie sesion para acceder al sistema')
       return redirect(url_for('login'))
@@ -43,7 +48,7 @@ def storePost():
          filename = secure_filename(image.filename)
          image.save(os.path.join(app.config['UPLOAD_FOLDER'],filename))
 
-         hazEl = Blog.Blog(title,description,published,state,filename)
+         hazEl = Blog.Blog('',title,description,published,state,filename)
          result = hazEl.store()
 
          if result[0] >= 1:
@@ -62,7 +67,7 @@ def searchPost():
       if request.method == 'POST':
          title = request.form['title']
       
-      hazEl = Blog.Blog(title)
+      hazEl = Blog.Blog('',title,'','','','')
 
       result = hazEl.search()
       
@@ -73,22 +78,16 @@ def searchPost():
       flash("Inicie sesion para acceder al sistema")
       return redirect(url_for('login'))
 
-<<<<<<< HEAD
-=======
-@app.route('/home/<filename>')
-def uploaded_file(filename):
-       filename = 'http://127.0.0.1:5000/static/images_posts/' + filename
-       return render_template('index.html', filename = filename)
-       
->>>>>>> 314cf38681c8f9261631ffd1d01e5d9dfd69497f
 @app.route('/comment/post', methods=['POST','GET'])
 def commentPost():
    if "user" in session:
       if request.method == 'POST':
-         body = request.form['body']
-         blogtitle = None #TODO buscar titulo del blog
-         hazEl = Comment.Comment(body, session['user'],blogtitle)
-         hazEl.writeComment()
+         comment = request.form['comment']
+         user_id = request.form["user_id"]
+         post_id = request.form["post_id"]
+
+         hazEl = Comment.Comment(comment,user_id,post_id)
+         result = hazEl.writeComment()
 
       if result[0] >= 1:
          flash("Comentario creado correctamente")
@@ -99,8 +98,5 @@ def commentPost():
    else:
       flash("Inicie sesion para acceder al sistema")
       return redirect(url_for('login'))
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 314cf38681c8f9261631ffd1d01e5d9dfd69497f
